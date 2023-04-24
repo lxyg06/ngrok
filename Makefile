@@ -19,15 +19,15 @@ client: deps
 assets: client-assets server-assets
 
 bin/go-bindata:
-	GOOS="" GOARCH="" go get github.com/go-bindata/go-bindata
+	GOOS="" GOARCH="" go get -u github.com/go-bindata/go-bindata/...
 
-client-assets: bin/go-bindata
+client-assets: go-bindata
 	bin/go-bindata -nomemcopy -pkg=assets -tags=$(BUILDTAGS) \
 		-debug=$(if $(findstring debug,$(BUILDTAGS)),true,false) \
 		-o=src/ngrok/client/assets/assets_$(BUILDTAGS).go \
 		assets/client/...
 
-server-assets: bin/go-bindata
+server-assets: go-bindata
 	bin/go-bindata -nomemcopy -pkg=assets -tags=$(BUILDTAGS) \
 		-debug=$(if $(findstring debug,$(BUILDTAGS)),true,false) \
 		-o=src/ngrok/server/assets/assets_$(BUILDTAGS).go \
